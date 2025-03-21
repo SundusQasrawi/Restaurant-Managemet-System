@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Order Confirmation</title>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <p>You already have an order placed at this time. Would you like to update it?</p>
+    <form method="post" action="{{ url_for('update_order', order_id=order['Order_ID']) }}">
+        <button type="submit">Yes, Update</button>
+    </form>
+    <form method="POST">
+        <button type="submit" name="update_order" class="btn btn-warning">Update Order</button>
+    </form>
+</body>
+</html>

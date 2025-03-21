@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Maramia Cafe & Restaurant</title>
+    <link href="../static/img/icon.png" rel="icon">
+    <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <style>
+        .action-buttons form {
+            display: inline-block; /* Make forms sit in line */
+        }
+        .btn-custom {
+            background-color:#cda45e; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+            ;
+            color: black; /* Adjust text color as needed */
+        }
+       
+    /* General Styles */
+    body {
+        padding-top: 100px; /* Pushes content below the header */
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* Table Styling */
+    .table-container {
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f7f2f2;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table thead {
+        background-color: #cda45e; /* Accent color */
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f134; /* Highlight on hover */
+        transition: background-color 0.3s ease;
+    }
+
+    .table tbody tr:last-child td {
+        border-bottom: none; /* Remove last row's border */
+    }
+
+    /* Buttons Styling */
+    .action-buttons button {
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom {
+        background-color: #cda45e; /* Accent color */
+        color: white;
+    }
+
+    .btn-custom:hover {
+        background-color: #cda45e; /* Slightly darker for hover */
+    }
+
+    .btn-danger {
+        background-color: #cda45e; /* Red for delete */
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #cda45e; /* Darker red for hover */
+    }
+
+    /* Form Styling */
+    .table-container form {
+        display: inline-block;
+    }
+
+    input[type="number"] {
+        width: 60px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 10px;
+    }
+
+    input[type="number"]:focus {
+        outline: none;
+        border: 1px solid #cda45e;
+        box-shadow: 0 0 5px rgba(205, 164, 94, 0.5);
+    }
+
+</style>
+
+
+    </style>
+</head>
+
+<body class="index-page">
+    <header id="header" class="header fixed-top">
+        <div class="topbar d-flex align-items-center">
+            <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:Mzomlot@maramia.com">Mzomlot@maramia.com</a></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+972 2-282-2221</span></i>
+                </div>
+            </div>
+        </div>
+        <div class="branding d-flex align-items-center">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+                    <h1 class="sitename">Tables Management</h1>
+                </a>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="manager.html" class="active">Go Back</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="container mt-5">
+        <!-- Centered Table Container -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Table Number</th>
+                        <th>Capacity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for table in tables %}
+                    <tr>
+                        <td>{{ table[0] }}</td> <!-- Table Number -->
+                        <td>{{ table[1] }}</td> <!-- Current Capacity -->
+                        <td class="action-buttons">
+                            <!-- Update Button -->
+                            <button type="button" class="btn btn-custom btn-sm" onclick="showUpdateField({{ table[0] }})">
+                                Update
+                            </button>
+    
+                            <!-- Delete Form -->
+                            <form method="post" action="/delete_table" class="d-inline">
+                                <input type="hidden" name="table_id" value="{{ table[0] }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+    
+                            <!-- Hidden Update Form -->
+                            <form id="update-form-{{ table[0] }}" method="post" action="/update_table" style="display: none;">
+                                <input type="hidden" name="table_id" value="{{ table[0] }}">
+                                <input type="number" name="capacity" value="{{ table[1] }}" required>
+                                <button type="submit" class="btn btn-custom btn-sm">Confirm</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="hideField({{ table[0] }})">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Add New Table -->
+        <div class="table-container">
+            <h3 class="text-center mb-3"style="color: #cda45e;">Add a New Table</h3>
+            <!-- Add Button -->
+            <button type="button" class="btn btn-custom btn-sm" onclick="showAddField()">Add Table</button>
+    
+            <!-- Hidden Add Form -->
+            <form id="add-form" method="post" action="/add_table" style="display: none;">
+                <div class="mb-3">
+                    <label for="capacity" class="form-label" style="color: #030303;">Enter Table Capacity:</label>
+                    <input type="number" class="form-control" id="capacity" name="capacity" required>
+                </div>
+                <button type="submit" class="btn btn-custom btn-sm">Confirm</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="hideAddField()">Cancel</button>
+            </form>
+        </div>
+    </main>
+    
+    <script>
+        // Show the update field for a specific table
+        function showUpdateField(tableId) {
+            // Hide all update forms
+            document.querySelectorAll('[id^="update-form-"]').forEach(form => {
+                form.style.display = 'none';
+            });
+    
+            // Show the form for the selected table
+            const updateForm = document.getElementById(`update-form-${tableId}`);
+            if (updateForm) {
+                updateForm.style.display = 'block';
+            }
+        }
+    
+        // Hide the update field for a specific table
+        function hideField(tableId) {
+            const updateForm = document.getElementById(`update-form-${tableId}`);
+            if (updateForm) {
+                updateForm.style.display = 'none';
+            }
+        }
+    
+        // Show the add table form
+        function showAddField() {
+            const addForm = document.getElementById('add-form');
+            if (addForm) {
+                addForm.style.display = 'block';
+            }
+        }
+    
+        // Hide the add table form
+        function hideAddField() {
+            const addForm = document.getElementById('add-form');
+            if (addForm) {
+                addForm.style.display = 'none';
+            }
+        }
+    </script>
+    
+    
+    
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

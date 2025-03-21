@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Employee</title>
+
+  <!-- Favicons -->
+  <link href="../static/img/icon.jpg" rel="icon">
+  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900;1,100;1,300;1,400;1,500;1,700;1,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Floating Action Button */
+    .fab-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #cda45e;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* Styling all buttons with color #cda45e */
+    .btn {
+      background-color: #cda45e;
+      border-color: #cda45e;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #b28b4f;
+      border-color: #b28b4f;
+    }
+
+    .btn:focus, .btn:active {
+      box-shadow: none;
+    }
+
+    
+    /* Max width of table columns */
+    .table-bordered td, .table-bordered th {
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    /* Prevent resizing when adding new row */
+    .new-row input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+  </style>
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header fixed-top">
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">Mzomlot@maramia.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+972 2-282-2221</span></i>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+          <h1 class="sitename">Maramia Cafe & Restaurant</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="manager.html">Go Back</a></li>
+
+            
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Employee List Table -->
+  <div class="container" style="padding-top: 150px;">
+    <h2 style="color: #cda45e; padding-bottom: 30px;">Employee List</h2>
+    <table class="table table-striped table-bordered" style="background-color: transparent;">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Type</th>
+          <th>Email</th>
+          <th>Hired Date</th>
+          <th>Salary</th>
+          <th>Actions</th> <!-- Added column for buttons -->
+        </tr>
+      </thead>
+      <tbody id="employee-table-body">
+        {% for employee in employees %}
+        <tr id="employee-{{ employee[0] }}">
+          <td id="emp-id-{{ employee[0] }}" contenteditable="false">{{ employee[0] }}</td>
+          <td id="emp-name-{{ employee[0] }}" contenteditable="false">{{ employee[1] }}</td>
+          <td id="emp-phone-{{ employee[0] }}" contenteditable="false">{{ employee[2] }}</td>
+          <td id="emp-type-{{ employee[0] }}" contenteditable="false">{{ employee[3] }}</td>
+          <td id="emp-email-{{ employee[0] }}" contenteditable="false">{{ employee[4] }}</td>
+          <td id="emp-hired-{{ employee[0] }}" contenteditable="false">{{ employee[5] }}</td>
+          <td id="emp-salary-{{ employee[0] }}" contenteditable="false">{{ employee[6] }}</td>
+          <td>
+            <button class="btn btn-warning" onclick="editEmployee({{ employee[0] }})"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-danger" onclick="deleteEmployee({{ employee[0] }})"><i class="bi bi-trash"></i></button>
+            <button class="btn btn-success" id="save-{{ employee[0] }}" style="display: none;" onclick="saveEdit({{ employee[0] }})">Save</button>
+            <button class="btn btn-secondary" id="cancel-{{ employee[0] }}" style="display: none;" onclick="cancelEdit({{ employee[0] }})">Cancel</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Floating Action Button -->
+  <div class="fab-button" onclick="addEmployeeRow()">
+    +
+  </div>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/vendor/php-email-form/validate.js"></script>
+  <script src="../static/vendor/aos/aos.js"></script>
+  <script src="../static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/js/main.js"></script>
+
+  <!-- JavaScript for Edit, Save and Cancel functionality -->
+  <script>
+    // Function to handle row deletion when trash button is clicked
+    function deleteEmployee(employeeId) {
+      fetch('/delete_employee', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: employeeId })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              const row = document.getElementById(`employee-${employeeId}`);
+              row.remove();
+          } else {
+              alert("Failed to delete the employee.");
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert("Error deleting employee.");
+      });
+    }
+
+    // Function to make a row editable when pencil button is clicked
+    function editEmployee(employeeId) {
+      const row = document.getElementById(`employee-${employeeId}`);
+      const cells = row.getElementsByTagName('td');
+      const saveButton = document.getElementById(`save-${employeeId}`);
+      const cancelButton = document.getElementById(`cancel-${employeeId}`);
+
+      for (let i = 1; i < cells.length - 1; i++) {
+        let cell = cells[i];
+        cell.contentEditable = "true";
+      }
+
+      saveButton.style.display = "inline-block";
+      cancelButton.style.display = "inline-block";
+    }
+
+    // Function to save the edited fields
+    function saveEdit(employeeId) {
+      const row = document.getElementById(`employee-${employeeId}`);
+      const cells = row.getElementsByTagName('td');
+      const saveButton = document.getElementById(`save-${employeeId}`);
+      const cancelButton = document.getElementById(`cancel-${employeeId}`);
+
+
+      cells[0].contentEditable = "false";
+
+      for (let i = 1; i < cells.length - 1; i++) {
+        let cell = cells[i];
+        cell.contentEditable = "false";
+      }
+
+      saveButton.style.display = "none";
+      cancelButton.style.display = "none";
+
+      const updatedData = {
+        id: employeeId,
+        name: cells[1].innerText,
+        phone: cells[2].innerText,
+        type: cells[3].innerText,
+        email: cells[4].innerText,
+        hired: cells[5].innerText,
+        salary: cells[6].innerText
+      };
+
+  
+
+      if (!/^[a-zA-Z\s]+$/.test(updatedData.name)) {
+        alert("Error: Name should only contain letters and spaces.");
+        cells[1].focus();
+        location.reload();
+       
+        return;
+      }
+
+      if (!/^[0-9-]+$/.test(updatedData.phone)) {
+        alert("Error: Phone number must contain only digits.");
+        cells[2].focus();
+        location.reload();
+        return;
+      }
+
+      if (!["chef", "service", "cleaner", "cashier"].includes(updatedData.type.toLowerCase())) {
+        alert("Error: Type must be 'chef', 'service', or 'cleaner', or 'cashier'.");
+        cells[3].focus();
+        location.reload();
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(updatedData.email)) {
+        alert("Error: Invalid email format.");
+        cells[4].focus();
+        location.reload();
+        return;
+      }
+
+      if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(updatedData.hired)) {
+        alert("Error: Invalid hired date.");
+        cells[5].focus();
+        location.reload();
+        return;
+      }
+
+      if (isNaN(updatedData.salary) || parseFloat(updatedData.salary) <= 0) {
+        alert("Error: Salary must be a positive number.");
+        cells[6].focus();
+        location.reload();
+        return;
+      }
+
+      fetch('/update_employee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          alert("Failed to update employee.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Error updating employee.");
+      });
+    }
+
+    // Function to cancel the edit
+    function cancelEdit(employeeId) {
+      const row = document.getElementById(`employee-${employeeId}`);
+      const cells = row.getElementsByTagName('td');
+      const saveButton = document.getElementById(`save-${employeeId}`);
+      const cancelButton = document.getElementById(`cancel-${employeeId}`);
+
+      for (let i = 0; i < cells.length - 2; i++) {
+        let cell = cells[i];
+        cell.contentEditable = "false";
+      }
+
+      saveButton.style.display = "none";
+      cancelButton.style.display = "none";
+    }
+
+    // Function to add a new employee row
+    function addEmployeeRow() {
+      const tableBody = document.getElementById("employee-table-body");
+
+      const newRow = document.createElement("tr");
+      newRow.classList.add("new-row");
+      newRow.innerHTML = ` 
+        <td><input type="text" id="new-emp-id" disabled></td>
+        <td><input type="text" id="new-emp-name"></td>
+        <td><input type="text" id="new-emp-phone"></td>
+        <td><input type="text" id="new-emp-type"></td>
+        <td><input type="text" id="new-emp-email"></td>
+        <td><input type="date" id="new-emp-hired"></td>
+        <td><input type="number" id="new-emp-salary"></td>
+        <td>
+          <button class="btn btn-success" onclick="saveNewEmployee()">Save</button>
+          <button class="btn btn-secondary" onclick="cancelNewEmployee()">Cancel</button>
+        </td>
+      `;
+      tableBody.appendChild(newRow);
+    }
+
+    // Function to save the new employee
+    function saveNewEmployee() {
+      const name = document.getElementById("new-emp-name").value;
+      const phone = document.getElementById("new-emp-phone").value;
+      const empType = document.getElementById("new-emp-type").value;
+      const email = document.getElementById("new-emp-email").value;
+      const hiredDate = document.getElementById("new-emp-hired").value;
+      const salary = document.getElementById("new-emp-salary").value;
+
+      const newEmployee = {
+        name: name,
+        phone: phone,
+        type: empType,
+        email: email,
+        hired: hiredDate,
+        salary: salary
+      };
+
+      fetch('/add_employee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEmployee)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert("Employee added successfully.");
+          window.location.reload(); // Reload the page to show the new employee
+        } else {
+          alert("Failed to add employee.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Error adding employee.");
+      });
+    }
+
+    // Function to cancel adding a new employee
+    function cancelNewEmployee() {
+      const tableBody = document.getElementById("employee-table-body");
+      const newRow = tableBody.querySelector(".new-row");
+      newRow.remove();
+    }
+  </script>
+</body>
+
+</html>

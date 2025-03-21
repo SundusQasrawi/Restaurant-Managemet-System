@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: #cda45e;
+        }
+
+        td {
+            background-color: #222;
+        }
+
+        /* Container for the buttons */
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px;
+        }
+
+        /* Button Styling */
+        a, button {
+            padding: 10px 20px;
+            background-color: #cda45e;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        a:hover, button:hover {
+            background-color: #b68a3e;
+        }
+
+        h1, h2 {
+            color: #cda45e;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+
+    <h2>Order Information</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Order Date</th>
+            <th>Order Time</th>
+            <th>Total Price</th>
+        </tr>
+        <tr>
+            <td>{{ order['Order_ID'] }}</td>
+            <td>{{ order['Customer_ID'] }}</td>
+            <td>{{ order['Order_Date'] }}</td>
+            <td>{{ order['Order_Time'] }}</td>
+            <td>{{ order['Total_Price'] }}</td>
+        </tr>
+    </table>
+
+    <h2>Order Details</h2>
+    <table>
+        <tr>
+            <th>Item ID</th>
+            <th>Quantity</th>
+        </tr>
+        {% for detail in order_details %}
+        <tr>
+            <td>{{ detail['Item_ID'] }}</td>
+            <td>{{ detail['Quantity'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Button container with horizontal layout -->
+    <div class="button-container">
+        <a href="{{ url_for('order') }}" class="btn">Go back to the orders page</a>
+        <a href="{{ url_for('edit_order', order_id=order.Order_ID) }}" class="btn">Edit Order</a>
+        <form method="POST" action="{{ url_for('delete_last_order', order_id=order['Order_ID']) }}">
+            <button type="submit" name="delete_order" class="btn">Delete This Order</button>
+        </form>
+    </div>
+    
+</body>
+</html>

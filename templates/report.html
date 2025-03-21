@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Maramia Cafe & Restaurant</title>
+  <!-- Favicons -->
+  <link href="../static/img/icon.png" rel="icon">
+  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/css/main.css" rel="stylesheet">
+  <style>
+    /* Adding padding to the top of the page to create space from the fixed header */
+    body.index-page {
+      padding-top: 120px;  /* Adjust the value as needed */
+    }
+
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin: 20px 0; 
+    }
+
+    th, td { 
+      border: 1px solid #ddd; 
+      padding: 10px; 
+      text-align: left; 
+    }
+
+    th { 
+      background-color: #cda45e; 
+      color: white; 
+    }
+
+    h2 { 
+        color: white; /* Changed to white for titles */
+      padding-top: 20px;  /* Padding to the top of the "Monthly Revenue" header */
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header fixed-top">
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">Mzomlot@maramia.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+972 2-282-2221</span></i>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-cente">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+          <h1 class="sitename">Maramia Cafe & Restaurant</h1>
+        </a>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="manager.html" class="active">Home<br></a></li>
+            <li><a href="manager.html">Go Back</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Monthly Revenue</h2>
+    <table>
+      <tr><th>Month</th><th>Total Revenue</th></tr>
+      {% for row in results['monthly_revenue'] %}
+      <tr><td>{{ row.Month }}</td><td>${{ row.Total_Revenue }}</td></tr>
+      {% endfor %}
+    </table>
+
+    <h2>Most Ordered Items</h2>
+    <table>
+      <tr><th>Item Name</th><th>Total Ordered</th></tr>
+      {% for row in results['most_ordered_items'] %}
+      <tr><td>{{ row.Item_Name }}</td><td>{{ row.Total_Quantity_Ordered }}</td></tr>
+      {% endfor %}
+    </table>
+    
+    <h2>Daily Sales Performance</h2>
+    <table>
+      <tr><th>Order Date</th><th>Total Orders</th><th>Daily Revenue</th></tr>
+      {% for row in results['daily_sales_performance'] %}
+      <tr><td>{{ row.Order_Date }}</td><td>{{ row.Total_Orders }}</td><td>${{ row.Daily_Revenue }}</td></tr>
+      {% endfor %}
+    </table>
+
+    <!-- New Sections for the Additional Queries -->
+    <h2>Orders Across Day Parts</h2>
+    <table>
+      <tr><th>Daypart</th><th>Total Orders</th><th>Total Revenue</th></tr>
+      {% for row in results['orders_across_day_parts'] %}
+      <tr><td>{{ row.Daypart }}</td><td>{{ row.Total_Orders }}</td><td>${{ row.Total_Revenue }}</td></tr>
+      {% endfor %}
+    </table>
+
+    <h2>Item Order Operations</h2>
+    <table>
+      <tr><th>Item Name</th><th>Total Quantity Ordered</th><th>Total Order Operations</th></tr>
+      {% for row in results['item_order_operations'] %}
+      <tr><td>{{ row.Item_Name }}</td><td>{{ row.Total_Quantity_Ordered }}</td><td>{{ row.Total_Order_Operations }}</td></tr>
+      {% endfor %}
+    </table>
+
+    <h2>Average Order Value By Month</h2>
+    <table>
+      <tr><th>Month</th><th>Average Order Value</th></tr>
+      {% for row in results['average_order_value_by_month'] %}
+      <tr><td>{{ row.Month }}</td><td>${{ row.Average_Order_Value }}</td></tr>
+      {% endfor %}
+    </table>
+
+    <h2>Reservation Count by Table</h2>
+    <table>
+      <tr><th>Table Number</th><th>Reservation Count</th></tr>
+      {% for row in results['reservation_count_by_table'] %}
+      <tr><td>{{ row.Table_Number }}</td><td>{{ row.Reservation_Count }}</td></tr>
+      {% endfor %}
+    </table>
+    
+    <h2>Employee Salary Ranking by Hire Date</h2>
+<table>
+  <tr><th>Hire Date</th><th>Employee Name</th><th>Salary</th></tr>
+  {% for row in results['employee_salary_ranking_by_hire_date'] %}
+  <tr><td>{{ row.Hired_Date }}</td><td>{{ row.Emp_Name }}</td><td>{{ row.Salary }}</td></tr>
+  {% endfor %}
+</table>
+ 
+<h2>Customer Order Frequency and Spending</h2>
+<table>
+  <tr>
+    <th>Customer ID</th>
+    <th>Customer Name</th>
+    <th>Total Orders</th>
+    <th>Total Spending</th>
+  </tr>
+  {% for row in results['customer_order_frequency'] %}
+  <tr>
+    <td>{{ row.Customer_ID }}</td>
+    <td>{{ row.Customer_Name }}</td>
+    <td>{{ row.Total_Orders }}</td>
+    <td>${{ "%.2f"|format(row.Total_Spending) }}</td> <!-- Formatting spending as currency -->
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Customer Reservations Count in 2024 for customers with more than three reservations</h2>
+<table>
+  <tr>
+    <th>Customer ID</th>
+    <th>Customer Name</th>
+    <th>Total Reservations</th>
+  </tr>
+  {% for row in results['customer_reservations_count'] %}
+  <tr>
+    <td>{{ row.Customer_ID }}</td>
+    <td>{{ row.Customer_Name }}</td>
+    <td>{{ row.Total_Reservations }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h2>Peak Reservation Times</h2>
+<table>
+  <tr><th>Hour</th><th>Total Reservations</th></tr>
+  {% for row in results['peak_reservation_times'] %}
+  <tr><td>{{ row.Hour }}</td><td>{{ row.Total_Reservations }}</td></tr>
+  {% endfor %}
+</table>
+<h2>Weekday vs Weekend Profit</h2>
+<table>
+  <tr><th>Day Type</th><th>Total Profit</th></tr>
+  {% for row in results['weekday_vs_weekend'] %}
+  <tr><td>{{ row.Day_Type }}</td><td>${{ row.Total_Profit }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Most Ordered Items Per Category</h2>
+<table>
+  <tr><th>Category</th><th>Item Name</th><th>Total Ordered</th></tr>
+  {% for row in results['most_ordered_items_per_category'] %}
+  <tr><td>{{ row.Category }}</td><td>{{ row.Item_Name }}</td><td>{{ row.Total_Quantity }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Most Ordered Items by Season</h2>
+<table>
+  <tr><th>Season</th><th>Most Ordered Item</th></tr>
+  <tr><td>Spring</td><td>{{ results['most_ordered_items_seasonal'][0].Spring }}</td></tr>
+  <tr><td>Summer</td><td>{{ results['most_ordered_items_seasonal'][0].Summer }}</td></tr>
+  <tr><td>Winter</td><td>{{ results['most_ordered_items_seasonal'][0].Winter }}</td></tr>
+</table>
+
+<h2>Item Pairs Commonly Orders Together</h2>
+<table>
+  <tr><th>Item 1</th><th>Item 2</th><th>Pair Count</th></tr>
+  {% for row in results['item_pair_analysis'] %}
+  <tr>
+      <td>{{ row.Item1 }}</td>
+      <td>{{ row.Item2 }}</td>
+      <td>{{ row.Pair_Count }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+  </div>
+
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

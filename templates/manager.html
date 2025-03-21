@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maramia Cafe & Restaurant</title>
+    <link href="../static/img/icon.jpg" rel="icon">
+    <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../static/css/main.css" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        .sidebar {
+            --background-color: #000000;
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --surface-color: #1a1a1a;
+            --contrast-color: #ffffff;
+            width: 70px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 8rem;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar:hover {
+            width: 220px;
+        }
+
+        .sidebar .menu-icon {
+            font-size: 2rem;
+            color: #a5d6a7;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .sidebar ul li {
+            width: 100%;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a i {
+            font-size: 1.8rem; /* Adjust icon size */
+            margin-right: 1rem; /* Spacing between icon and text */
+        }
+
+        .sidebar ul li a span {
+            display: none;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .sidebar:hover ul li a span {
+            display: inline;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #81c784;
+        }
+
+        .main-content {
+            margin-left: 70px;
+            padding: 7rem;
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 220px;
+        }
+
+        .section {
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-categories button,
+        .order-status button,
+        .reservation button {
+            padding: 0.7rem 1.5rem;
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .menu-categories button:hover,
+        .order-status button:hover,
+        .reservation button:hover {
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+        }
+
+        .footer {
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        form input,
+        form textarea,
+        form button {
+            padding: 0.7rem;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            --default-color: #ffffff;
+            --heading-color: #ffffff;
+            --contrast-color: #ffffff;
+        }
+
+        #support form textarea {
+            resize: none;
+        }
+
+        /* Hide all sections by default */
+        .section {
+            display: none;
+        }
+
+        /* Show the active section */
+        .active-section {
+            display: block;
+        }
+
+        /* Video Styles */
+        .home-video {
+            width: 500px; /* Fixed width for the square */
+            height: 500px; /* Fixed height for the square */
+            margin-top: 2rem;
+            border-radius: 8px;
+            object-fit: cover; /* Ensures the video fits the square without distortion */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header" class="header fixed-top">
+        <div class="topbar d-flex align-items-center">
+            <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">Mzomlot@maramia.com</a></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+972 2-282-2221</span></i>
+                </div>
+            </div>
+        </div><!-- End Top Bar -->
+
+        <div class="branding d-flex align-items-center">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+                    <h1 class="sitename">Maramia Cafe & Restaurant</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="index.html">Log out</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul>
+            <li><a href="employeesedit.html" onclick="showSection('Employees')"><i class="fas fa-users"></i> <span>Employees</span></a></li>
+            <li><a href="menuedit.html" onclick="showSection('Menu')"><i class="fas fa-book-open"></i> <span>Menu</span></a></li>
+            <li><a href="#" onclick="showSection('Orders')"><i class="fas fa-clipboard-list"></i> <span>Orders</span></a></li>
+            <li><a href="tables.html" onclick="showSection('Tables')"><i class="fas fa-th"></i> <span>Tables</span></a></li>
+            <li><a href="#" onclick="showSection('Reservations')"><i class="fas fa-calendar-alt"></i> <span>Reservations</span></a></li>
+            <li><a href="report.html" onclick="showSection('Report')"><i class="fas fa-chart-line"></i> <span>Report</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <section id="home" class="section active-section">
+            <h1 style="font-family: 'Poppins', sans-serif; font-size: 4rem; font-weight: bold; letter-spacing: 2px; color: #f5f5f5; text-align: center; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
+                Welcome to <span style="color: #81c784;">Maramia</span> Cafe & Restaurant
+            </h1>
+            <p style="font-family: 'Roboto', sans-serif; font-size: 1.2rem; font-weight: 300; color: #f1f1f1; text-align: center; line-height: 1.6; max-width: 700px; margin: 0 auto;">
+                Explore our menu, place your orders, and enjoy exclusive offers!
+            </p>
+            <video class="home-video" autoplay muted loop>
+                <source src="../static/img/HomeVideo.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <section id="menu" class="section">
+            <h2>Menu</h2>
+            <div class="menu-categories">
+                <iframe 
+                    src="menu_withouttop.html" 
+                    style="width: 100%; height: 80vh; border: none; border-radius: 5px;">
+                </iframe>
+            </div>
+        </section>
+
+        <section id="tables" class="section">
+            <h2>Special Offers</h2>
+            <div class="offers-list">
+             <iframe 
+                src="tables.html" 
+                style="width: 100%; height: 80vh; border: none; border-radius: 5px;">
+            </iframe>
+            </div>
+        </section>
+
+        <section id="orders" class="section">
+            <h2>Your Orders</h2>
+            <div class="order-status">
+                <button>Go to make an order!</button>
+            </div>
+        </section>
+
+        <section id="reservations" class="section">
+            <h2>Table Reservations</h2>
+            <div class="reservation">
+                <a href="makeReservation.html" class="btn btn-primary">Go to make a reservation!</a>
+            </div>
+        </section>
+
+        <section id="support" class="section">
+            <h2>Customer Support</h2>
+            <p>If you have any questions or need assistance, please contact us!</p>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+    </div><!-- End Main Content -->
+
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active-section'));
+
+            // Show the clicked section
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active-section');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
